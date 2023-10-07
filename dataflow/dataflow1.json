@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AzureSynapsetransformeddata",
+						"referenceName": "moviedatasetsynapse",
 						"type": "DatasetReference"
 					},
 					"name": "sinktosynapse"
@@ -77,7 +77,7 @@
 				"          numberofmovies = count()) ~> aggregate1",
 				"aggregate1 alterRow(upsertIf(true())) ~> upsertcondi",
 				"upsertcondi sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
+				"     validateSchema: true,",
 				"     deletable:false,",
 				"     insertable:false,",
 				"     updateable:false,",
