@@ -43,7 +43,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 filter(toInteger(year) > 1950) ~> filtercolumnafter1950"
+				"select1 filter(toInteger(year) > 1960) ~> filtercolumnafter1950"
 			]
 		}
 	}
