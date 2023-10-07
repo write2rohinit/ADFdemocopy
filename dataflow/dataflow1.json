@@ -12,7 +12,15 @@
 					"name": "sourcemoviedataDF"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSynapsetransformeddata",
+						"type": "DatasetReference"
+					},
+					"name": "sinktosynapse"
+				}
+			],
 			"transformations": [
 				{
 					"name": "select1"
@@ -67,7 +75,28 @@
 				"          highrate = first(title),",
 				"          lowrate = last(title),",
 				"          numberofmovies = count()) ~> aggregate1",
-				"aggregate1 alterRow(upsertIf(true())) ~> upsertcondi"
+				"aggregate1 alterRow(upsertIf(true())) ~> upsertcondi",
+				"upsertcondi sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['primarygener','year'],",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          primarygener,",
+				"          year,",
+				"          avgratings,",
+				"          highrate,",
+				"          lowrate,",
+				"          numberofmovies",
+				"     )) ~> sinktosynapse"
 			]
 		}
 	}

@@ -84,6 +84,13 @@
 						"referenceName": "dataflow1",
 						"type": "DataFlowReference"
 					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "AzureDataLakeStDFinput",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "data/stagingdir"
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
