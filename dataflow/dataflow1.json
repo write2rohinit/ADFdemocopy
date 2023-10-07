@@ -25,6 +25,12 @@
 				},
 				{
 					"name": "window1"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "upsertcondi"
 				}
 			],
 			"scriptLines": [
@@ -54,7 +60,14 @@
 				"derivedColumn1 window(over(primarygener,",
 				"          year),",
 				"     desc(RT, true),",
-				"     stars = rank()) ~> window1"
+				"     stars = rank()) ~> window1",
+				"window1 aggregate(groupBy(primarygener,",
+				"          year),",
+				"     avgratings = avg(toInteger(stars)),",
+				"          highrate = first(title),",
+				"          lowrate = last(title),",
+				"          numberofmovies = count()) ~> aggregate1",
+				"aggregate1 alterRow(upsertIf(true())) ~> upsertcondi"
 			]
 		}
 	}
