@@ -1,0 +1,50 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dataflowtext",
+						"type": "DatasetReference"
+					},
+					"name": "sourcemoviedataDF"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "filtercolumnbefore1970"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          movie as string,",
+				"          title as string,",
+				"          genres as string,",
+				"          year as string,",
+				"          Rating as string,",
+				"          {Rotton Tomato} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourcemoviedataDF",
+				"sourcemoviedataDF select(mapColumn(",
+				"          moviename = movie,",
+				"          title,",
+				"          genres,",
+				"          year,",
+				"          stars = Rating,",
+				"          RT = {Rotton Tomato}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 filter(toInteger(year) > 1950) ~> filtercolumnbefore1970"
+			]
+		}
+	}
+}
