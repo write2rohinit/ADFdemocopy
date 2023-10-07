@@ -19,6 +19,12 @@
 				},
 				{
 					"name": "filtercolumnafter1950"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "window1"
 				}
 			],
 			"scriptLines": [
@@ -43,7 +49,12 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 filter(toInteger(year) > 1960) ~> filtercolumnafter1950"
+				"select1 filter(toInteger(year) > 1960) ~> filtercolumnafter1950",
+				"filtercolumnafter1950 derive(primarygener = iif(locate('|',genres) > 1,left(genres,locate('|',genres)-1),genres)) ~> derivedColumn1",
+				"derivedColumn1 window(over(primarygener,",
+				"          year),",
+				"     desc(RT, true),",
+				"     stars = rank()) ~> window1"
 			]
 		}
 	}
