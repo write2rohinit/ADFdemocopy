@@ -18,7 +18,7 @@
 					"name": "select1"
 				},
 				{
-					"name": "filtercolumnbefore1970"
+					"name": "filtercolumnafter1950"
 				}
 			],
 			"scriptLines": [
@@ -43,7 +43,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 filter(toInteger(year) > 1950) ~> filtercolumnbefore1970"
+				"select1 filter(toInteger(year) > 1950) ~> filtercolumnafter1950"
 			]
 		}
 	}
